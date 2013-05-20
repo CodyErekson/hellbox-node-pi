@@ -2,10 +2,19 @@ var async = require("async"),
 _ = require("underscore"),
 http = require('http'),
 url = require('url'),
-gpio = require("pi-gpio"),
 newLead = require("./newLead.js");
 
 var server = http.createServer();
+
+var idmap = {};
+idmap['1'] = 18;
+idmap['2'] = 18;
+idmap['3'] = 18;
+idmap['4'] = 18;
+idmap['5'] = 18;
+idmap['6'] = 18;
+idmap['7'] = 18;
+idmap['8'] = 18;
 
 server.on('request', function(req, res) {
 
@@ -47,8 +56,11 @@ server.on('request', function(req, res) {
 			//FIRE!
 			lead = parseInt(lead);
 			console.log(lead);
-			var l = newLead(lead);
+			console.log(idmap[lead]);
+			var l = newLead(idmap[lead]);
+			//these next two functions need to be run with async in series
 			l.fire();
+			l.reset();
 		}
 	}
 
