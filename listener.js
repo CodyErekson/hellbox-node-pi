@@ -59,8 +59,23 @@ server.on('request', function(req, res) {
 			console.log(idmap[lead]);
 			var l = newLead(idmap[lead]);
 			//these next two functions need to be run with async in series
-			l.fire();
-			l.reset();
+			async.series([
+				function(cb){
+					l.fire();
+					cb(null);
+				},
+				function(cb){
+					//leave it on for 1 second to trigger the transistor, then turn off
+					setTimeout(function(){cb(null); }, 1000);
+				},
+				function(cb){
+					l.reset();
+					cb(null);
+				}
+			],
+			function(err, results){
+				console.log("finished now");
+			});
 		}
 	}
 
