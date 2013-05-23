@@ -1,5 +1,4 @@
 var async = require("async"),
-_ = require("underscore"),
 http = require('http'),
 url = require('url'),
 newLead = require("./newLead.js");
